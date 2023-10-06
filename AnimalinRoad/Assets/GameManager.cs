@@ -71,13 +71,6 @@ public class GameManager : MonoBehaviour
         this.gameObject.transform.position = new Vector3(posx, posy, 0);
     }
 
-    public void blockMove(string direction)
-    {
-        if (collideBlock[0] != null) 
-        {
-            gameManager.GetComponent<MapManager>
-        }
-    }
     void Start()
     {
         
