@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1061981118642",
+    "project_id": "animalfreindserver",
+    "storage_bucket": "animalfreindserver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061981118642:android:20858e6aad1536af6229ab",
+        "android_client_info": {
+          "package_name": "com.VRAPP.AnimalinRoad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc3MsmsPVQeO8D-CMCrc6kMZZE-3KWPx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
