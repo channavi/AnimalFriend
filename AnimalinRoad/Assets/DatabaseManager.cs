@@ -4,45 +4,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase;
-using Firebase.Auth;
-using Firebase.Database;
-public class DatabaseManager : MonoBehaviour
+using UnityEngine.UI;
+using TMPro;
+using System;
+
+public class FirebaseManager : MonoBehaviour
 {
+    [SerializeField] TMP_InputField nicknameInput;
+
     private DatabaseReference reference;
-    private Firebase.Auth.FirebaseUser user;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
-        // Set up the reference to the Firebase database
-        reference = FirebaseDatabase.DefaultInstance.RootReference;
-
-        // Get the current user
-        user = FirebaseAuth.DefaultInstance.CurrentUser;
+        AppOptions options = new AppOptions { DatabaseUrl = new Uri("https://animalfreindserver-default-rtdb.firebaseio.com/")};
+        FirebaseApp app = FirebaseApp.Create (options);
+        reference = FirebaseDatabase.DefaultInstance.GetReference("rank");
+    }
+    private void Start()
+    {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
+            FirebaseApp app = FirebaseApp.DefaultInstance;
+            reference = FirebaseDatabase.DefaultInstance.RootReference;
+        });
     }
 
-    // Method to set the nickname for the current user
-    public void SetNickname(string nickname)
+    public void SetNickname()
     {
-        // Check if the user is logged in
-        if (user != null)
+        if (reference != null)
         {
-            // Set the nickname in the database
-            reference.Child("users").Child(user.UserId).Child("nickname").SetValueAsync(nickname).ContinueWith(task =>
+            string userId = "사용자 고유 식별자 (예: Firebase 인증 UID)";
+            string newNickname = nicknameInput.text;
+
+            reference.Child("users").Child(userId).Child("nickname").SetValueAsync(newNickname).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
-                    Debug.Log("Nickname set successfully.");
+                    Debug.Log("닉네임이 업데이트되었습니다: " + newNickname);
                 }
                 else
                 {
-                    Debug.LogError("Failed to set nickname.");
+                    Debug.Log("닉네임 업데이트에 실패했습니다.");
                 }
             });
         }
-        else
+    }
+
+    public void LoadNickname()
+    {
+        if (reference != null)
         {
-            Debug.LogError("User not logged in.");
+            string userId = "사용자 고유 식별자 (예: Firebase 인증 UID)";
+            reference.Child("users").Child(userId).Child("nickname").GetValueAsync().ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+                    string nickname = snapshot.Value.ToString();
+                    Debug.Log("닉네임: " + nickname);
+                }
+                else
+                {
+                    Debug.Log("닉네임 불러오기에 실패했습니다.");
+                }
+            });
         }
     }
 }

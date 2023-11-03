@@ -14,7 +14,7 @@ public class AuthManager : MonoBehaviour
     Firebase.Auth.FirebaseAuth auth;
     private void Start()
     {
-        nameField.gameObject.SetActive(false);
+        nameField.gameObject.SetActive(true);
     }
     void Awake()
     {
