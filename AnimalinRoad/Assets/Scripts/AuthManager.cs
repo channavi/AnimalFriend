@@ -14,7 +14,7 @@ public class AuthManager : MonoBehaviour
     Firebase.Auth.FirebaseAuth auth;
     private void Start()
     {
-        nameField.gameObject.SetActive(true);
+
     }
     void Awake()
     {
@@ -47,7 +47,6 @@ public class AuthManager : MonoBehaviour
                 if (!task.IsCanceled && !task.IsFaulted)
                 {
                     Debug.Log(emailField.text + "로 회원가입! \n");
-                    nameField.gameObject.SetActive(true);
                 }
                 else
                 {

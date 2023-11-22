@@ -6,31 +6,23 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject[] obj;
     public bool end;
     public bool ready;
     public int score;
     public TextMeshProUGUI scoreText;
+    public GameObject player;
     void Start()
     {
         end = false;
         ready = true;
         score = 0;
-        InvokeRepeating("MakeObj", 1.0f, 1.5f);
         scoreText.text = "Score : " + score.ToString();   
     }
     
-    void MakeObj()
-    {
-        Instantiate(obj[Random.Range(0, obj.Length)],
-            new Vector3(2f, 0f, -7f), Quaternion.identity);
-    }
-
     public void GameOver()
     {
         if (end == true) return;
         end = true;
-        CancelInvoke("MakeObj");
     }
 
     public void GetScore()
