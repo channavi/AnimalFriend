@@ -8,8 +8,19 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+public class UserModel
+{
+    // 사용자 기본정보
+
+    public String userName; // 사용자 이름(닉네임)
+    public String uid; // 현재 사용자(로그인한)
+                       //    public String pushToken;
+
+}
+
 public class FirebaseManager : MonoBehaviour
 {
+
     [SerializeField] TMP_InputField nicknameInput;
 
     private DatabaseReference reference;
@@ -24,50 +35,10 @@ public class FirebaseManager : MonoBehaviour
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
+            DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
             FirebaseApp app = FirebaseApp.DefaultInstance;
-            reference = FirebaseDatabase.DefaultInstance.RootReference;
+
         });
     }
 
-    public void SetNickname()
-    {
-        if (reference != null)
-        {
-            string userId = "사용자 고유 식별자 (예: Firebase 인증 UID)";
-            string newNickname = nicknameInput.text;
-
-            reference.Child("users").Child(userId).Child("nickname").SetValueAsync(newNickname).ContinueWith(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    Debug.Log("닉네임이 업데이트되었습니다: " + newNickname);
-                }
-                else
-                {
-                    Debug.Log("닉네임 업데이트에 실패했습니다.");
-                }
-            });
-        }
-    }
-
-    public void LoadNickname()
-    {
-        if (reference != null)
-        {
-            string userId = "사용자 고유 식별자 (예: Firebase 인증 UID)";
-            reference.Child("users").Child(userId).Child("nickname").GetValueAsync().ContinueWith(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-                    string nickname = snapshot.Value.ToString();
-                    Debug.Log("닉네임: " + nickname);
-                }
-                else
-                {
-                    Debug.Log("닉네임 불러오기에 실패했습니다.");
-                }
-            });
-        }
-    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BtnClick : MonoBehaviour
 {
@@ -11,10 +12,14 @@ public class BtnClick : MonoBehaviour
 
     private void Start()
     {
+
+    }
+    public void NameBoardOff()
+    {
         pannel.SetActive(false);
     }
-    public void NameBoardOn()
+    public void startGame()
     {
-        pannel.SetActive(true);
+        SceneManager.LoadScene("SampleScene");
     }
 }
